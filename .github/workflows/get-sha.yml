@@ -1,0 +1,27 @@
+
+name: Reusable workflow to get SHA Githash output value
+on:
+  workflow_call:
+    outputs:
+      sha:
+        value: ${{ jobs.reusable-get-sha.outputs.sha }}
+
+jobs:
+  reusable-get-sha:
+    name: Generate SHA output value
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.sha-generation.outputs.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Echo commit SHA
+        run: echo "$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})"
+      - name: Generate and save commit SHA
+        id: sha-generation
+        shell: bash
+        # for PR close event, use merge_commit_sha
+        run: echo "sha=$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})" >> $GITHUB_OUTPUT
+        # for synchronize event, use the head commit
+        #run: echo "sha=$(git rev-parse ${{ github.event.pull_request.head.sha }})" >> $GITHUB_OUTPUT
+

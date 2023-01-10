@@ -15,8 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Echo event type
+      - name: Get event name
         run: echo ${GITHUB_EVENT_NAME}
+      - name: Check event name
+        run: if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then echo "WFD"; elif [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then echo "PR"; fi
       - name: Echo commit SHA
         run: echo "$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})"
       - name: Generate and save commit SHA

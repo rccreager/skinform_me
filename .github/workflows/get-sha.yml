@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Echo event type
+        run: echo ${GITHUB_EVENT_NAME}
       - name: Echo commit SHA
         run: echo "$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})"
       - name: Generate and save commit SHA

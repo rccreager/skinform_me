@@ -20,7 +20,7 @@ jobs:
       - name: Check event name
         run: |
           if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
-            echo "WFD";
+            echo "WFD, use GITHUB_SHA: ${GITHUB_SHA}";
           elif [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
             echo "PR"
             if [ "${{ github.event.pull_request.merged }}" = true ]; then

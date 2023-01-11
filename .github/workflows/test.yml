@@ -4,6 +4,8 @@ on:
   # TODO confirm that we can get commit SHA
   # TODO this is only here for temporary testing. upon merge to master, use workflow_dispatch to do manual triggers:
   # https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+  pull_request:
+    types: [ synchronize ]
 
 jobs:
 

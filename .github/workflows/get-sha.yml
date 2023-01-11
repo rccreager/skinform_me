@@ -18,7 +18,17 @@ jobs:
       - name: Get event name
         run: echo ${GITHUB_EVENT_NAME}
       - name: Check event name
-        run: if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then echo "WFD"; elif [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then echo "PR"; fi
+        run: |
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
+            echo "WFD";
+          elif [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+            echo "PR"
+            if [ "${{ github.event.pull_request.merged }}" = true ]; then
+              echo "PR merged, use merge_commit_sha: ${{ github.event.pull_request.merge_commit_sha }}"
+            else
+              echo "PR not merged, use head commit: ${{ github.event.pull_request.head.sha }}"
+            fi
+          fi
       - name: Echo commit SHA
         run: echo "$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})"
       - name: Generate and save commit SHA

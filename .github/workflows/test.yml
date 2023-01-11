@@ -11,3 +11,7 @@ jobs:
 
   get-sha:
     uses: ./.github/workflows/get-sha.yml
+  
+  follow-up:
+    needs: [ get-sha ]
+    run: echo ${{ needs.get-sha.outputs.sha }}

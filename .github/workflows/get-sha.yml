@@ -22,7 +22,12 @@ jobs:
           if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]; then
             echo "WFD";
           elif [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
-            echo "PR";
+            echo "PR"
+            if [ -z "${{ github.event.pull_request.merge_commit_sha }}" ]; then
+              echo "PR merge commit sha null"
+            else
+              echo "PR MCS not null"
+            fi
           fi
       - name: Echo commit SHA
         run: echo "$(git rev-parse ${{ github.event.pull_request.merge_commit_sha }})"

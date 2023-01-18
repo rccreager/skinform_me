@@ -11,7 +11,17 @@ jobs:
 
   get-sha:
     uses: ./.github/workflows/get-sha.yml
-  
+
   follow-up:
     needs: [ get-sha ]
-    run: echo ${{ needs.get-sha.outputs.sha }}
+    steps:
+    - name: test
+      run: echo ${{ needs.get-sha.outputs.sha }}
+
+  setup-jdk:
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: zulu
+        java-version: 11
+        cache: 'sbt'

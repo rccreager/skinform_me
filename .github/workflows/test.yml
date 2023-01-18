@@ -19,6 +19,7 @@ jobs:
       run: echo ${{ needs.get-sha.outputs.sha }}
 
   setup-jdk:
+    needs: [ get-sha ]
     steps:
     - name: Setup JDK
       uses: actions/setup-java@v3

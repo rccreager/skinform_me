@@ -13,12 +13,14 @@ jobs:
     uses: ./.github/workflows/get-sha.yml
 
   follow-up:
+    runs-on: ubuntu-latest
     needs: [ get-sha ]
     steps:
     - name: test
       run: echo ${{ needs.get-sha.outputs.sha }}
 
   setup-jdk:
+    runs-on: ubuntu-latest
     needs: [ get-sha ]
     steps:
     - name: Setup JDK
